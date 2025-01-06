@@ -12,7 +12,10 @@ export const useAuthStore = create((set, get) => ({
 
     checkAuth: async () => {
         try {
-            const res = await axiosInstance.get("/auth/check");
+            const res = await axiosInstance.get("/auth/check", {
+                withCredentials: true,  // Ensure cookies are sent with the request
+            });
+            
             set({ authUser: res.data });
         } catch (error) {
             console.log("Error in checkAuth:", error);
@@ -58,4 +61,26 @@ export const useAuthStore = create((set, get) => ({
             toast.error(error.response.data.message);
         }
     },
+
+    saveSnippet: async (data) => {
+        set({ isSavingSnippet: true });
+        try {
+            const res = await axiosInstance.post("/snippets", data); // API endpoint for saving a snippet
+            toast.success("Snippet saved successfully!");
+            // Optionally update state with the saved snippet if needed
+            set((state) => ({
+                snippets: [...state.snippets, res.data],
+            }));
+        } catch (error) {
+            toast.error(
+                error.response?.data?.message || "Failed to save the snippet"
+            );
+        } finally {
+            set({ isSavingSnippet: false });
+        }
+    },
+    
 }));
+
+
+
