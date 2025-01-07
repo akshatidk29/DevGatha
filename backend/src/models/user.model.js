@@ -16,6 +16,26 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
+    achievements: [
+      {
+        title: String,
+        description: String,
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    recentActivities: [
+      {
+        title: String,         // Use title to describe the activity
+        description: String,   // Add a description for the activity
+        date: {
+          type: Date,
+          default: Date.now,   // Set a default date if not provided
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

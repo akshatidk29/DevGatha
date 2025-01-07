@@ -21,4 +21,4 @@ const ProgressSchema = new mongoose.Schema({
 
 const Progress = mongoose.model("Progress", ProgressSchema);
 
-export default Progress;
+export default Progress; 

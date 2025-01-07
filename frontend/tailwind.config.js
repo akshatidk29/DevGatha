@@ -9,5 +9,6 @@ export default {
   theme: {
     extend: {},
   },
+  darkMode: "class", // Enable dark mode by adding the `dark` class to the HTML element
   plugins: [daisyui],
 }

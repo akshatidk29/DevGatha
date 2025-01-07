@@ -17,37 +17,35 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-screen grid lg:grid-cols-2 mt-7">
-      {/* Left Side - Form */}
-      <div className="flex flex-col justify-center items-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8">
-          {/* Logo */}
-          <div className="text-center mb-8">
+    <div className="h-screen grid lg:grid-cols-2 mt-6 py-12 pl-2 dark:bg-slate-900">
+
+      <div className="flex flex-col justify-center items-center p-6 sm:p-12 border border-black shadow-xl dark:border-cyan-300 rounded-full">
+
+        <div className="w-full max-w-md space-y-2">
+          <div className="text-center mb-2">
             <div className="flex flex-col items-center gap-2 group">
-              <div
-                className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20
-              transition-colors"
-              >
-                <BugOff className="w-6 h-6 text-primary" />
+
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center " >
+                <BugOff className="size-10  text-black dark:text-white" />
               </div>
-              <h1 className="text-2xl font-bold mt-2">Welcome Back</h1>
-              <p className="text-base-content/60">Sign in to your account</p>
+
+              <h1 className="text-2xl font-bold mt-0  dark:text-white">Welcome Back</h1>
+              <p className="text-base-content/60  dark:text-gray-100">Sign in to your account</p>
             </div>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 text-center">
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium">Email</span>
+                <span className="label-text font-semibold dark:text-white">Email</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-base-content/40" />
+                  <Mail className="h-5 w-5 text-base-content/40  dark:text-white" />
                 </div>
                 <input
                   type="email"
-                  className={`input input-bordered w-full pl-10`}
+                  className={`input input-md rounded-2xl input-bordered w-full pl-10 border-black dark:bg-transparent dark:border-cyan-200 dark:text-white`}
                   placeholder="you@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -57,15 +55,15 @@ const LoginPage = () => {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium">Password</span>
+                <span className="label-text font-semibold dark:text-white">Password</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-base-content/40" />
+                  <Lock className="h-5 w-5 text-base-content/40  dark:text-white" />
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
-                  className={`input input-bordered w-full pl-10`}
+                  className={`input input-md rounded-2xl input-bordered w-full pl-10 border-black dark:bg-transparent dark:border-cyan-200 dark:text-white`}
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -76,15 +74,15 @@ const LoginPage = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-base-content/40" />
+                    <EyeOff className="h-5 w-5 text-base-content/40 dark:text-white" />
                   ) : (
-                    <Eye className="h-5 w-5 text-base-content/40" />
+                    <Eye className="h-5 w-5 text-base-content/40 dark:text-white" />
                   )}
                 </button>
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary w-full" disabled={isLoggingIn}>
+            <button type="submit" className="btn btn-primary w-25  rounded-3xl bg-black dark:bg-black hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black" disabled={isLoggingIn}>
               {isLoggingIn ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -97,9 +95,9 @@ const LoginPage = () => {
           </form>
 
           <div className="text-center">
-            <p className="text-base-content/60">
+            <p className="text-base-content/60 dark:text-white">
               Don&apos;t have an account?{" "}
-              <Link to="/signup" className="link link-primary">
+              <Link to="/signup" className="link link-primary  dark:text-white dark:hover:text-yellow-100">
                 Create account
               </Link>
             </p>

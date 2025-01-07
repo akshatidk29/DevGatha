@@ -3,7 +3,7 @@ import Lesson from "../models/lessons.model.js";
 
 export const progressInLang = async (req, res) => {
     const { language } = req.params;
-    const  userId  = req.user._id; // Pass userId as query param
+    const userId = req.user._id; // Pass userId as query param
     try {
         const progress = await Progress.findOne({ userId });
         if (!progress || !progress[language]) {
@@ -12,7 +12,7 @@ export const progressInLang = async (req, res) => {
                 progress: { totalLessons: 0, completedLessons: 0, completedLessonIds: [] },
             });
         }
-        res.json({ 
+        res.json({
             success: true,
             progress: {
                 totalLessons: progress[language].totalLessons || 0,
@@ -55,7 +55,7 @@ export const addProgress = async (req, res) => {
             // Update existing progress
             if (!progress[language].completedLessonIds.includes(lessonId)) {
                 progress[language].completedLessonIds.push(lessonId);
-                progress[language].completedLessons = ( progress[language].completedLessons || 0 )+ 1;
+                progress[language].completedLessons = (progress[language].completedLessons || 0) + 1;
             }
         }
 
@@ -69,16 +69,41 @@ export const addProgress = async (req, res) => {
 
 
 export const getAllProgress = async (req, res) => {
-    const  userId  = req.user._id; // Assumes user authentication is in place
-  
+    const userId = req.user._id; // Assumes user authentication is in place
+
     try {
-      const progress = await Progress.findOne({ userId });
-      if (!progress) {
-        return res.status(404).json({ success: false, message: "No progress found for this user." });
-      }
-  
-      res.json({ success: true, progress });
+        let progress = await Progress.findOne({ userId });
+
+        if (!progress) {
+            // If no progress is found, create a new progress document
+            progress = new Progress({
+                userId,
+                python: {
+                    completedLessons: 0,
+                    totalLessons: await Lesson.countDocuments({ language: 'python' }),
+                    completedLessonIds: [], // Initialize completedLessonIds as an empty array
+                },
+                cpp: {
+                    completedLessons: 0,
+                    totalLessons:  await Lesson.countDocuments({ language: 'cpp' }),
+                    completedLessonIds: [], // Initialize completedLessonIds as an empty array
+                },
+                c: {
+                    completedLessons: 0,
+                    totalLessons:  await Lesson.countDocuments({ language: 'c' }),
+                    completedLessonIds: [], // Initialize completedLessonIds as an empty array
+                },
+                // Add other languages and fields if needed
+            });
+
+            // Save the newly created progress document
+            console.log("New Progress Created");
+            await progress.save();
+            return res.status(201).json({ success: true, progress, message: "New progress created." });
+        }
+
+        res.json({ success: true, progress });
     } catch (error) {
-      res.status(500).json({ success: false, message: "Error fetching progress", error });
+        res.status(500).json({ success: false, message: "Error fetching progress", error });
     }
-  };
+};

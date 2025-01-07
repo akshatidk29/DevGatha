@@ -12,6 +12,8 @@ import { useAuthStore } from "./store/useAuthStore";
 
 import { useEffect } from "react";
 import { LoaderCircle } from 'lucide-react';
+import Footer from "./components/Footer";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -38,11 +40,14 @@ const App = () => {
         <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/editor" element={authUser ? <EditorPage /> : <Navigate to="/" />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/lessons/get/:id" element={<LessonPage />} />
-        <Route path="/lessons/:language" element={<AllLessonPage />} />
-        
+        <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/" />} />
+        <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
+        <Route path="/lessons/get/:id" element={authUser ? <LessonPage /> : <Navigate to="/login" />} />
+        <Route path="/lessons/:language" element={authUser ? <AllLessonPage /> : <Navigate to="/login" />} />
+
       </Routes>
+
+      <Footer />
 
 
     </div>
