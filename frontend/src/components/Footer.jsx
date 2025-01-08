@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto flex justify-between items-center px-4 ">
 
         <p className="text-sm">
-          &copy; {new Date().getFullYear()} CodeTutor. All rights reserved.
+          &copy; {new Date().getFullYear()} DevGatha. All rights reserved.
         </p>
 
         <div className="flex space-x-6">
@@ -44,7 +44,7 @@ const Footer = () => {
             If you have any Questions, Feedback, or Suggestions, feel free to reach out to Us !
           </p>
           <p className="mt-8 text-base">
-            Email : <a href="mailto:  contact@codetutor.com" className="text-blue-500 dark:text-blue-400"> contact@codetutor.com </a>
+            Email : <a href="mailto:  contact@codetutor.com" className="text-blue-500 dark:text-blue-400"> contact@devgatha.com </a>
           </p>
           <p className="text-xl font-semibold mt-12 text-gray-700 dark:text-white">
             You can also find us on Social Media:
@@ -97,7 +97,7 @@ const Footer = () => {
         <div className="modal-box bg-slate-200 dark:bg-gray-700 dark:text-white">
           <h2 className="text-2xl font-bold mb-6">About Us</h2>
           <p className="mt-2 text-sm">
-            CodeTutor is an Innovative Platform designed to help users learn Coding Languages. Whether you are a Beginner or an Advanced Programmer, we offer Tailored lessons and real-time Coding Practice to make learning more Engaging and Effective.
+            DevGatha is an Innovative Platform designed to help users learn Coding Languages. Whether you are a Beginner or an Advanced Programmer, we offer Tailored lessons and real-time Coding Practice to make learning more Engaging and Effective.
           </p>
           <p className="mt-4 text-sm">
             Our mission is to empower Individuals with the Skills they need to succeed in the ever-evolving Tech Industry. We believe in making Coding Accessible to Everyone, regardless of their background.

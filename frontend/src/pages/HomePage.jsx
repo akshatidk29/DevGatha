@@ -103,9 +103,14 @@ const HomePage = () => {
       {/* Welcome Section  */}
       <div className="text-left ">
 
-        <h1 className="text-4xl font-bold  mb-4 " style={{ fontFamily: "Verdana" }}>
-          Welcome to CodeTutor
+        <h1 className="text-4xl font-bold  mb-4 " style={{ fontFamily: "cursive" }}>
+          <span className="text-red-600 dark:text-green-400">Dev</span><span className="dark:text-blue-400 ">Gatha</span> <span className="bg-clip-text dark:text-red-300"> - The <span className="text-green-600 dark:text-red-400">Saga</span> Begins</span><span className="animate-blink text-red-400 dark:text-green-400">_</span>
         </h1>
+
+        <style>
+          {`@keyframes blink { 50% { opacity: 0; } } .animate-blink {  animation: blink 1s step-start infinite; } `}
+        </style>
+
 
         <p style={{ fontFamily: "cursive" }}>
           Learn, practice, and master programming with AI-guided tutoring.
@@ -113,8 +118,8 @@ const HomePage = () => {
 
         <button
           onClick={handleRedirect}
-          className="btn btn-primary mt-6 rounded-3xl bg-black dark:bg-white   dark:text-black"  >
-          Start Coding in the Editor
+          className="btn text-white btn-primary mt-6 rounded-3xl border border-black bg-black hover:bg-white hover:text-black dark:bg-white  dark:text-black dark:hover:bg-black dark:hover:text-white"  >
+          Start Coding
         </button>
 
       </div>
@@ -133,7 +138,7 @@ const HomePage = () => {
               <div
                 className={`p-4 border rounded-3xl shadow-md transition-all ${progress && progress.python.totalLessons > 0 && progress.python.completedLessons === progress.python.totalLessons
                   ? "font-bold bg-white border-lime-950 text-green-800   hover:bg-green-400   hover:text-blue-800                   dark:bg-green-700 dark:text-white dark:hover:bg-white dark:hover:text-black"
-                  : "font-bold bg-white border-lime-950 text-black   hover:bg-gray-300  hover:text-blue-800                   dark:bg-gray-400 dark:text-white dark:hover:bg-white dark:hover:text-black"
+                  : "font-bold bg-white border-lime-950 text-black   hover:bg-gray-300  hover:text-blue-800                   dark:bg-gray-500 dark:text-white dark:hover:bg-white dark:border-white dark:hover:text-black"
                   }`}
               >
                 <h3 className="text-2xl " style={{ fontFamily: "cursive" }}>Python</h3>
@@ -152,7 +157,7 @@ const HomePage = () => {
                 className={`p-4 border rounded-3xl shadow-md transition-all ${progress && progress.cpp.totalLessons > 0 && progress.cpp.completedLessons === progress.cpp.totalLessons
 
                   ? "font-bold bg-white border-lime-950 text-green-800   hover:bg-green-400   hover:text-blue-800                   dark:bg-green-700 dark:text-white dark:hover:bg-white dark:hover:text-black"
-                  : "font-bold bg-white border-lime-950 text-black   hover:bg-gray-300  hover:text-blue-800                   dark:bg-gray-400 dark:text-white dark:hover:bg-white dark:hover:text-black"
+                  : "font-bold bg-white border-lime-950 text-black   hover:bg-gray-300  hover:text-blue-800                   dark:bg-gray-500 dark:text-white dark:hover:bg-white dark:border-white dark:hover:text-black"
                   }`}
               >
                 <h3 className="text-2xl " style={{ fontFamily: "cursive" }}>Cpp</h3>
@@ -170,7 +175,7 @@ const HomePage = () => {
               <div
                 className={`p-4 border rounded-3xl shadow-md transition-all ${progress && progress.c.totalLessons > 0 && progress.c.completedLessons === progress.c.totalLessons
                   ? "font-bold bg-white border-lime-950 text-green-800   hover:bg-green-400   hover:text-blue-800                   dark:bg-green-700 dark:text-white dark:hover:bg-white dark:hover:text-black"
-                  : "font-bold bg-white border-lime-950 text-black   hover:bg-gray-300  hover:text-blue-800                   dark:bg-gray-400 dark:text-white dark:hover:bg-white dark:hover:text-black"
+                  : "font-bold bg-white border-lime-950 text-black   hover:bg-gray-300  hover:text-blue-800                   dark:bg-gray-500 dark:text-white dark:hover:bg-white dark:border-white dark:hover:text-black"
                   }`}
               >
                 <h3 className="text-2xl " style={{ fontFamily: "cursive" }}>C</h3>
@@ -196,16 +201,16 @@ const HomePage = () => {
           Featured Lessons
         </h2>
 
-        <button onClick={() => setShowModal(true)} className="mt-0 mb-4 font-bold text-sm btn btn-primary rounded-3xl  bg-black dark:bg-white   dark:text-black"  >
+        <button onClick={() => setShowModal(true)} className="mt-0 mb-4 text-white font-bold text-sm btn btn-primary rounded-3xl  bg-black hover:bg-white hover:text-black dark:bg-white   dark:text-black dark:hover:bg-black dark:hover:text-white"  >
           Add Lesson
         </button>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {lessons.length > 0 ? (
-            lessons.slice(0, 6).map((lesson) => (  // Limit to 6 lessons
+            lessons.slice(0, 3).map((lesson) => (  // Limit to 6 lessons
 
-              <div key={lesson._id} className="p-4 border rounded-3xl shadow-md border-black bg-blue-200 dark:border-white dark:bg-gray-700" >
+              <div key={lesson._id} className="p-4 border border-black rounded-3xl shadow-md dark:border-cyan-400 bg-blue-300  dark:bg-gray-600" >
 
                 <h3 className="text-lg font-medium">{lesson.title}</h3>
 
@@ -213,7 +218,7 @@ const HomePage = () => {
                   Language: {lesson.language}
                 </p>
 
-                <button className="btn btn-sm btn-primary rounded-2xl text-white bg-blue-700  dark:bg-green-600" onClick={() => handleViewLesson(lesson._id)} >
+                <button className="btn btn-sm bg-slate-700 text-white px-4 py-2 rounded-2xl border dark:border-white hover:bg-white hover:text-black transition-colors duration-300" onClick={() => handleViewLesson(lesson._id)} >
                   View Lesson
                 </button>
 
@@ -240,7 +245,7 @@ const HomePage = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border p-2 mb-4 w-full rounded-2xl"
+              className="border p-2 mb-4 w-full rounded-2xl dark:text-black"
               placeholder="Enter Security Key" />
 
             <button onClick={handlePasswordSubmit} className="btn btn-primary bg-gray-600 rounded-3xl" >
@@ -285,16 +290,16 @@ const HomePage = () => {
 
       <button
         onClick={fetchSnippets}
-        className="bg-black text-white px-4 py-2 rounded-2xl hover:bg-gray-600" >
+        className="mt-0 mb-4 text-white font-bold text-sm btn btn-primary rounded-3xl  bg-black hover:bg-white hover:text-black dark:bg-white   dark:text-black dark:hover:bg-black dark:hover:text-white" >
         View My Snippets
       </button>
 
-      <div className="snippets-list p-4 mt-4">
+      <div className="snippets-list p-4 px-0 mt-4">
 
         {isSnippetsFetched && snippets.length === 0 ? (
 
-          <div className="no-snippets text-center p-4 border rounded-lg bg-gray-200">
-            <p>No Snippets Available</p>
+          <div className="no-snippets w-fit p-4 border border-black rounded-3xl bg-gray-200 text-left text-black font-semibold">
+            No Snippets Available
           </div>) : (
 
           snippets.map((snippet) => (

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import { LogOut, Settings, User, BugOff } from "lucide-react";
 import ThemeSwitcher from "./themeSwitcher";
+import ChatBot from "./ChatBot";
 
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
@@ -17,7 +18,7 @@ const Navbar = () => {
                 <BugOff className="w-full h-full bg-white dark:bg-black dark:text-white" />
               </div>
               <div className="flex gap-2">
-                <h1 className="text-lg font-bold" style={{ fontFamily: "cursive" }}>CodeTutor</h1>
+                <h1 className="text-lg font-bold" style={{ fontFamily: "cursive" }}>DevGatha</h1>
                 {authUser && (
                   <span className="textarea-xs font-medium text-slate-600 dark:text-white " style={{ fontFamily: "Verdana" }}>
                     Hello,  {authUser.fullName || "User"}
@@ -28,7 +29,7 @@ const Navbar = () => {
           </div>
 
           <ThemeSwitcher />
-
+          <ChatBot />
 
           {/* Navigation Links */}
 
@@ -45,7 +46,7 @@ const Navbar = () => {
 
               </>
             )}
-            
+
             {authUser && (
               <>
                 <Link to={"/profile"} className="btn btn-sm gap-2 border-black rounded-xl">

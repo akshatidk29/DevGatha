@@ -83,9 +83,10 @@ const AllLessonsPage = () => {
 
     return (
         <div className="min-h-screen mt-16 p-5 dark:bg-slate-900 dark:text-white">
-            <h2 className="text-2xl  w-fit p-3 rounded-3xl text-left mb-6  border border-black bg-slate-800 text-white dark:bg-white  dark:text-black" style={{ fontFamily: "sans-serif" }} >
-                {language ? language.toUpperCase() : "Language"} Lessons
+            <h2 className="text-2xl w-fit p-3 rounded-3xl text-left mb-6 border border-black bg-slate-600 text-white dark:bg-gray-200 dark:border-cyan-300 mx-auto dark:text-black" style={{ fontFamily: "sans-serif" }}>
+                {language ? language.charAt(0).toUpperCase() + language.slice(1) : "Language"} Lessons
             </h2>
+
 
             <section className="my-12 sm:px-2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -98,11 +99,11 @@ const AllLessonsPage = () => {
                                 return (
                                     <li key={lesson._id}>
                                         <div
-                                            className={`p-3 border-2 rounded-3xl shadow-lg hover:shadow-2xl transition-all ease-in-out duration-300 ${isCompleted ? "bg-green-300 border-green-500" : "bg-white border-gray-200"}`} >
+                                            className={`ml-4 p-3 border-2 rounded-3xl shadow-lg hover:shadow-2xl transition-all ease-in-out duration-300 ${isCompleted ? "bg-green-400 border-black dark:border-red-400" : "bg-white border-gray-500 dark:border-red-300"}`} >
                                             <h3 className="text-xl font-semibold text-gray-900 mb-3">
                                                 {lesson.title}
                                             </h3>
-                                            <p className="text-sm text-gray-800 mb-4">
+                                            <p className="text-sm text-gray-700 mb-4">
                                                 Language: {lesson.language}
                                             </p>
                                             <div className="flex items-center space-x-2">
@@ -110,14 +111,14 @@ const AllLessonsPage = () => {
                                                     <span className="text-xl">✅</span>
                                                 )}
                                                 <button
-                                                    className="btn btn-sm bg-black text-white px-4 py-2 rounded-2xl border dark:border-black hover:bg-white hover:text-black transition-colors duration-300"
+                                                    className="btn btn-sm bg-black text-white px-4 py-2 rounded-2xl border dark:border-white hover:bg-white hover:text-black transition-colors duration-300"
                                                     onClick={() => navigate(`/lessons/get/${lesson._id}`)} >
                                                     View Lesson
                                                 </button>
                                                 {/* Mark lesson as completed */}
                                                 {!isCompleted && (
                                                     <button
-                                                        className="btn btn-sm bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-300"
+                                                        className="btn btn-sm bg-green-600 text-white px-4 py-2 rounded-2xl hover:bg-green-700 transition-colors duration-300"
                                                         onClick={() => handleAddProgress(lesson.lessonNumber)}
                                                     >
                                                         Mark as Completed

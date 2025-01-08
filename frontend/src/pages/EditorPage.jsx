@@ -132,13 +132,13 @@ const EditorPage = () => {
 
               <button
                 onClick={handleRunCode}
-                className=" mr-4 px-4 py-2 rounded-2xl border border-black   text-black dark:border-white dark:text-white dark:bg-transparent dark:hover:bg-red-800" >
+                className=" mr-4 px-4 py-2 rounded-2xl border border-black   text-black dark:border-white hover:bg-red-300 dark:text-white dark:bg-transparent dark:hover:bg-red-800" >
                 Run Code
               </button>
 
               <button
                 onClick={handleSave}
-                className="bg-green-500 text-white px-2 py-2 rounded-2xl hover:bg-green-600">
+                className="bg-green-400 border border-black text-white px-2 py-2 rounded-2xl hover:bg-green-600">
                 Save Snippet
               </button>
             </div>
