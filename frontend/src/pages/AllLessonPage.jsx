@@ -83,7 +83,7 @@ const AllLessonsPage = () => {
 
     return (
         <div className="min-h-screen mt-16 p-5 dark:bg-slate-900 dark:text-white">
-            <h2 className="text-2xl w-fit p-3 rounded-3xl text-left mb-6 border border-black bg-slate-600 text-white dark:bg-gray-200 dark:border-cyan-300 mx-auto dark:text-black" style={{ fontFamily: "sans-serif" }}>
+            <h2 className="text-2xl w-fit p-3 rounded-3xl text-center mb-6 border border-black bg-slate-600 text-white dark:bg-gray-200 dark:border-cyan-300 mx-auto dark:text-black" style={{ fontFamily: "sans-serif" }}>
                 {language ? language.charAt(0).toUpperCase() + language.slice(1) : "Language"} Lessons
             </h2>
 
