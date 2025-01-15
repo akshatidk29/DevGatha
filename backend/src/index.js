@@ -10,6 +10,10 @@ import snippetRoutes from "./routes/snippet.routes.js"
 import lessonRoute from "./routes/lesson.routes.js"
 import progressRoute from "./routes/progress.routes.js"
 import userProfileRoute from "./routes/userProfile.route.js"
+import chatbotRoutes from "./routes/chatbot.routes.js";
+
+
+
 
 import { connectDB } from "./lib/db.js";
 
@@ -34,7 +38,7 @@ app.use("/api/snippets", snippetRoutes);
 app.use("/api/lessons", lessonRoute);
 app.use("/api/progress", progressRoute);
 app.use("/api/user", userProfileRoute);
-
+app.use("/api/chatbot", chatbotRoutes);
 
 
 app.listen(PORT, () => {

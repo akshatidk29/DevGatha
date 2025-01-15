@@ -72,6 +72,13 @@ Follow these steps to set up DevGatha locally:
    MONGO_URI=your-mongodb-connection-string
    PORT=5000
    JWT_SECRET=your-jwt-secret
+   NODE_ENV=development
+
+   BOTPRESS_INJECT_URL=your-botpress-inject-url
+   BOTPRESS_CUSTOM_URL=your-botpress-custom-url
+
+   RAPIDAPI_KEY=your-rapidapi-key
+
    ```
 
 4. **Run the Application**

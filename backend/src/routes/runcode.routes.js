@@ -1,10 +1,13 @@
 import express from "express";
 import axios from "axios";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const router = express.Router();
 
 const JUDGE0_URL = 'https://judge0-ce.p.rapidapi.com/submissions';
-const RAPIDAPI_KEY = '910a1f94c6msha07276b3f9d9cfep146739jsnc44b1ede2a50';
+const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 
 router.post('/', async (req, res) => {
     console.log("Correct");
