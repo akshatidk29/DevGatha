@@ -24,7 +24,7 @@ const LoginPage = () => {
         <div className="w-full max-w-md space-y-2">
           <div className="text-center mb-2">
             <div className="flex flex-col items-center gap-2 group">
-
+ 
               <div className="w-12 h-12 rounded-xl flex items-center justify-center " >
                 <BugOff className="size-10  text-black dark:text-white" />
               </div>

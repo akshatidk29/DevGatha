@@ -27,13 +27,12 @@ const AllLessonsPage = () => {
         try {
             const response = await axiosInstance.get(`/progress/${language}`);
             setProgress(response.data.progress);
-
         } catch (err) {
             console.error("Error fetching progress:", err);
         }
     };
-    useEffect(() => {
 
+    useEffect(() => {
         fetchLessons();
         fetchProgress();
     }, [language]);
@@ -78,7 +77,6 @@ const AllLessonsPage = () => {
         }
     };
 
-
     if (error) return <p>{error}</p>;
 
     return (
@@ -86,7 +84,6 @@ const AllLessonsPage = () => {
             <h2 className="text-2xl w-fit p-3 rounded-3xl text-center mb-6 border border-black bg-slate-600 text-white dark:bg-gray-200 dark:border-cyan-300 mx-auto dark:text-black" style={{ fontFamily: "sans-serif" }}>
                 {language ? language.charAt(0).toUpperCase() + language.slice(1) : "Language"} Lessons
             </h2>
-
 
             <section className="my-12 sm:px-2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -98,8 +95,7 @@ const AllLessonsPage = () => {
 
                                 return (
                                     <li key={lesson._id}>
-                                        <div
-                                            className={`ml-4 p-3 border-2 rounded-3xl shadow-lg hover:shadow-2xl transition-all ease-in-out duration-300 ${isCompleted ? "bg-green-400 border-black dark:border-red-400" : "bg-white border-gray-500 dark:border-red-300"}`} >
+                                        <div className={`ml-4 p-3 border-2 rounded-3xl shadow-lg hover:shadow-2xl transition-all ease-in-out duration-300 ${isCompleted ? "bg-green-400 border-black dark:border-red-400" : "bg-white border-gray-500 dark:border-red-300"}`}>
                                             <h3 className="text-xl font-semibold text-gray-900 mb-3">
                                                 {lesson.title}
                                             </h3>
@@ -112,7 +108,8 @@ const AllLessonsPage = () => {
                                                 )}
                                                 <button
                                                     className="btn btn-sm bg-black text-white px-4 py-2 rounded-2xl border dark:border-white hover:bg-white hover:text-black transition-colors duration-300"
-                                                    onClick={() => navigate(`/lessons/get/${lesson._id}`)} >
+                                                    onClick={() => navigate(`/lessons/get/${lesson._id}`)}
+                                                >
                                                     View Lesson
                                                 </button>
                                                 {/* Mark lesson as completed */}

@@ -6,13 +6,12 @@ export const addAchievement = async (title, description) => {
         const achievementData = {
             title: title,
             description: description,
-            date: new Date().toISOString(), // Add current date and time in ISO format
+            date: new Date().toISOString(), 
         };
 
         const response = await axiosInstance.post("/user/achievements", achievementData);
-        return response.data; // You can return the response or a success message if needed
+        return response.data;
     } catch (error) {
-        console.log("Error is", error.message);
         throw new Error("Failed to add achievement.");
     }
 };
@@ -23,11 +22,11 @@ export const addActivity = async (title, description) => {
         const activityData = {
             title: title,
             description: description,
-            date: new Date().toISOString(), // Add current date and time in ISO format
+            date: new Date().toISOString(), 
         };
 
         const response = await axiosInstance.post("user/activities", activityData);
-        return response.data; // You can return the response or a success message if needed
+        return response.data; 
     } catch (error) {
         console.log("Error is", error.message);
         throw new Error("Failed to add activity.");

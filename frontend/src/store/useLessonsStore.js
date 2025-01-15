@@ -22,7 +22,7 @@ export const fetchLessonById = async (id) => {
 export const addLesson = async (lessonData) => {
     try {
       const response = await axiosInstance.post("/lessons/add", lessonData);
-      return response.data; // You can return the response or a success message if needed
+      return response.data; 
     } catch (error) {
       console.log("error is", error.message);
       throw new Error("Failed to add lesson.");

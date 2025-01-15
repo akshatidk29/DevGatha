@@ -5,7 +5,7 @@ const lessonSchema = new mongoose.Schema({
   lessonNumber: { type: Number, required: true },
   title: { type: String, required: true },
   content: {
-    type: [String],   // Array of strings, can contain any number of strings
+    type: [String],
     required: true
   },
   examples: [

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { axiosInstance } from '../lib/axios'; // Assuming axios instance is set up
+import { axiosInstance } from '../lib/axios'; 
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ const SettingsPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [currentPassword, setCurrentPassword] = useState(''); // Initial password
+    const [currentPassword, setCurrentPassword] = useState(''); 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
@@ -30,7 +30,7 @@ const SettingsPage = () => {
                 setCurrentPassword('');
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000); // Optional delay for user experience
+                }, 1000); 
                 navigate('/login');
             }
         } catch (error) {

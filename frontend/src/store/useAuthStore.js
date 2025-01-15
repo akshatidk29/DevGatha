@@ -13,9 +13,8 @@ export const useAuthStore = create((set, get) => ({
     checkAuth: async () => {
         try {
             const res = await axiosInstance.get("/auth/check", {
-                withCredentials: true,  // Ensure cookies are sent with the request
+                withCredentials: true, 
             });
-            
             set({ authUser: res.data });
         } catch (error) {
             console.log("Error in checkAuth:", error);
@@ -30,9 +29,9 @@ export const useAuthStore = create((set, get) => ({
         try {
             const res = await axiosInstance.post("/auth/signup", data);
             set({ authUser: res.data });
-            toast.success("Account created successfully");
+            toast.success("Account created successfully. Welcome!");
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.response?.data?.message || "Failed to create an account. Please try again.");
         } finally {
             set({ isSigningUp: false });
         }
@@ -43,10 +42,9 @@ export const useAuthStore = create((set, get) => ({
         try {
             const res = await axiosInstance.post("/auth/login", data);
             set({ authUser: res.data });
-            toast.success("Logged in successfully");
- 
+            toast.success("Logged in successfully! Welcome back!");
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.response?.data?.message || "Invalid credentials. Please try again.");
         } finally {
             set({ isLoggingIn: false });
         }
@@ -56,9 +54,14 @@ export const useAuthStore = create((set, get) => ({
         try {
             await axiosInstance.post("/auth/logout");
             set({ authUser: null });
-            toast.success("Logged out successfully");
+    
+            // Show success toast with delayed reload
+            toast.success("Logged out successfully!");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Failed to log out. Please try again.");
         }
     },
 
@@ -73,14 +76,10 @@ export const useAuthStore = create((set, get) => ({
             }));
         } catch (error) {
             toast.error(
-                error.response?.data?.message || "Failed to save the snippet"
+                error.response?.data?.message || "Failed to save the snippet. Please try again."
             );
         } finally {
             set({ isSavingSnippet: false });
         }
     },
-    
 }));
-
-
-

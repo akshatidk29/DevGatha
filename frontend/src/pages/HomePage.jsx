@@ -18,7 +18,7 @@ const HomePage = () => {
   const [lessonData, setLessonData] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const correctPassword = "iamam"; // Replace with your actual password
+  const correctPassword = "iamam"; 
 
   const handlePasswordSubmit = () => {
     if (password === correctPassword) {

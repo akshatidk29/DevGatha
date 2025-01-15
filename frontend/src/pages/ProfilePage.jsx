@@ -191,7 +191,7 @@ const ProfilePage = () => {
                 {/* Motivational Section */}
                 <div className="mt-8 mx-auto w-fit bg-gray-100 dark:bg-gray-700 p-4 rounded-2xl">
                     <p className="text-center text-sm font-medium text-gray-800 dark:text-gray-300">
-                        "Clean code always looks like it was written by someone who cares"
+                        Clean code always looks like it was written by someone who cares..
                     </p>
                 </div>
 

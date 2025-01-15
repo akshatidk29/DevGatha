@@ -38,7 +38,7 @@ app.use("/api/user", userProfileRoute);
 
 
 app.listen(PORT, () => {
-  console.log("Server is running on Port :", PORT);
+  console.log("Server Running");
   connectDB();
 });
 

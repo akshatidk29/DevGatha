@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const ThemeSwitcher = () => {
+  // Initialize theme state from localStorage, default to 'light'
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
@@ -12,6 +13,7 @@ const ThemeSwitcher = () => {
     }
   }, [theme]);
 
+  // Toggle between light and dark themes and update localStorage
   const handleThemeChange = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
@@ -21,7 +23,7 @@ const ThemeSwitcher = () => {
   return (
     <div>
       <label className="swap swap-rotate">
-        {/* This hidden checkbox controls the state */}
+        {/* Hidden checkbox controls the theme change */}
         <input
           type="checkbox"
           className="theme-controller"
@@ -29,7 +31,7 @@ const ThemeSwitcher = () => {
           onChange={handleThemeChange}
         />
 
-        {/* Sun icon */}
+        {/* Sun icon for light theme */}
         <svg
           className="swap-off h-10 w-10 fill-current"
           xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +42,7 @@ const ThemeSwitcher = () => {
           />
         </svg>
 
-        {/* Moon icon */}
+        {/* Moon icon for dark theme */}
         <svg
           className="swap-on h-10 w-10 fill-current"
           xmlns="http://www.w3.org/2000/svg"

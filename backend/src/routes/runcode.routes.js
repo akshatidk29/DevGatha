@@ -1,75 +1,72 @@
 import express from "express";
-import { exec } from "child_process";
-import fs from "fs";
+import axios from "axios";
 
 const router = express.Router();
-const runCode = (code, language) => {
-    return new Promise((resolve, reject) => {
-        let command;
 
-        // Create command based on the selected language
-        switch (language) {
-            case "javascript":
-                command = `node -e "${code}"`;
-                break;
-            case "python":
-                command = `python -c "${code.replace(/(["\\])/g, '\\$1')}"`; // Escapes quotes and backslashes
-                break;
-            case "java":
-                command = `echo "${code}" > Main.java && javac Main.java && java Main`;
-                break;
-            case "c":
-                const tempFilePath1 = './code.c';
-                fs.writeFileSync(tempFilePath1, code); // Write code to file
-                // Use .exe for Windows to run compiled C++ code
-                command = `gcc ${tempFilePath1} -o code.exe && code.exe`;
-                break;
-            case "cpp":
-                const tempFilePath = './code.cpp';
-                fs.writeFileSync(tempFilePath, code); // Write code to file
-                // Use .exe for Windows to run compiled C++ code
-                command = `g++ ${tempFilePath} -o code.exe && code.exe`;
-                break;
-            default:
-                reject("Unsupported language");
-                return;
-        }
+const JUDGE0_URL = 'https://judge0-ce.p.rapidapi.com/submissions';
+const RAPIDAPI_KEY = '910a1f94c6msha07276b3f9d9cfep146739jsnc44b1ede2a50';
 
-        // Execute the command and capture the output
-        exec(command, (error, stdout, stderr) => {
-            if (error) {
-                console.error("Execution error:", error);
-                reject({
-                    message: `Error: ${stderr || error.message}`,
-                    details: error,
-                });
-            } else {
-                if (stderr) {
-                    console.error("stderr:", stderr);
-                    reject({
-                        message: `stderr: ${stderr}`,
-                        details: stderr,
-                    });
-                } else {
-                    resolve({ output: stdout });
-                }
-            }
-        });
-    });
-};
+router.post('/', async (req, res) => {
+    console.log("Correct");
+    const { language, code, input } = req.body;
 
+    const languageIdMap = {
+        python: 71,
+        javascript: 63,
+        c: 50,
+        cpp: 54,
+    };
 
-
-router.post("/", async (req, res) => {
-    const { code, language } = req.body;
+    const languageId = languageIdMap[language];
+    if (!languageId) {
+        return res.status(400).json({ error: 'Unsupported language' });
+    }
 
     try {
-        const result = await runCode(code, language);
-        res.json(result);
+        const submissionResponse = await axios.post(
+            JUDGE0_URL,
+            {
+                source_code: code,
+                language_id: languageId,
+                stdin: input,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-RapidAPI-Key': RAPIDAPI_KEY,
+                },
+            }
+        );
 
-    } catch (err) {
-        res.status(500).json({ error: err });
-        console.log("Hello");
+        const token = submissionResponse.data.token;
+
+        let executionResult;
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        do {
+            executionResult = await axios.get(`${JUDGE0_URL}/${token}`, {
+                headers: {
+                    'X-RapidAPI-Key': RAPIDAPI_KEY,
+                },
+            });
+            attempts++;
+            if (attempts >= maxAttempts) {
+                throw new Error('Execution timed out');
+            }
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second before retrying
+        } while (executionResult.data.status.id <= 2);
+        res.json({
+            stdout: executionResult.data.stdout ,
+            stderr: executionResult.data.stderr ,
+            compile_output: executionResult.data.compile_output ,
+            time: executionResult.data.time,
+            memory: executionResult.data.memory,
+            status: executionResult.data.status.description,
+        });
+
+    } catch (error) {
+        res.status(500).json({ error: 'Code execution failed', details: error.message });
     }
 });
 

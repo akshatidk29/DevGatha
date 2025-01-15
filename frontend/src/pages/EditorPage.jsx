@@ -2,38 +2,54 @@ import { useState } from "react";
 import Editor from "@monaco-editor/react";
 import { useSnippetStore } from "../store/useSnippetStore"; // Adjust the import based on your store setup
 import toast from "react-hot-toast";
+
 const EditorPage = () => {
   const { handleSaveSnippet } = useSnippetStore(); // Access the save function from your store
 
-  const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [title, setTitle] = useState(""); // New state to manage the title of the snippet
 
+  // Store code for each language
+  const [languageCode, setLanguageCode] = useState({
+    javascript: `console.log('Hello, World!');`,
+    python: `print('Hello, World!')`,
+    c: `#include <stdio.h>\n\nint main() {\n\tprintf("Hello, World!\\n");\n\treturn 0;\n}`,
+    cpp: `#include <iostream>\nusing namespace std;\n\nint main() {\n\tcout << "Hello, World!" << endl;\n\treturn 0;\n}`,
+  });
+
   const handleEditorChange = (value) => {
-    setCode(value);
+    setLanguageCode((prev) => ({
+      ...prev,
+      [language]: value, // Save the code for the current language
+    }));
   };
 
   const handleRunCode = async () => {
     try {
+      setOutput("Running..."); // Display "Running..." in the output window
       const response = await fetch("http://localhost:5001/api/run", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          code: code,
           language: language,
+          code: languageCode[language],
+          input: input, // Include input
         }),
       });
-
       const data = await response.json();
-      if (data.output) {
-        toast.success("Running...");
-        setOutput(data.output); // Display the output in the output section
+      console.log(data.stderr);
+      console.log(data);
+
+      if (data.status === "Accepted") {
+        toast.success("Code ran successfully!");
+        setOutput(data.stdout || ""); // Set stdout in the output box
       } else {
-        setOutput("Error: Unable to run the code.");
+        toast.error("Code execution failed!");
+        setOutput(data.stderr);
       }
     } catch (error) {
       setOutput("Error: " + error.message);
@@ -41,124 +57,86 @@ const EditorPage = () => {
   };
 
   const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-    setCode(getBoilerplateCode(event.target.value)); // Reset to boilerplate code
-  };
-
-  const getBoilerplateCode = (language) => {
-    switch (language) {
-      case 'javascript':
-        return `console.log('Hello, World!');`;
-      case 'python':
-        return `print('Hello, World!')`;
-      case 'java':
-        return `public class Main { public static void main(String[] args) { System.out.println("Hello, World!"); } }`;
-      case 'c':
-        return `#include <stdio.h>\n\nint main() {\n\tprintf("Hello, World!\\n");\n\treturn 0;\n}`;
-      case 'cpp':
-        return `#include <iostream>\nusing namespace std;\n\nint main() {\n\tcout << "Hello, World!" << endl;\n\treturn 0;\n}`;
-      default:
-        return '';
-    }
+    const newLanguage = event.target.value;
+    setLanguage(newLanguage);
   };
 
   const handleSave = () => {
     if (title.trim() === "") {
-      alert("Please provide a title for the Snippet."); // Or you can use toast.error() if you have react-hot-toast set up
+      toast.error("Please provide a title for the snippet.");
       return;
     }
     const snippetData = {
       title: title,
-      code: code,
+      code: languageCode[language],
       language: language,
     };
-    handleSaveSnippet(snippetData); // Save the Sippet using the store
+    handleSaveSnippet(snippetData); // Save the snippet using the store
   };
 
   return (
     <div className="flex flex-col h-screen mt-16 dark:bg-slate-900">
       <div className="flex h-full">
-
         {/* Code Editor Section */}
         <div className="w-3/5 p-4 flex flex-col">
           <div className="flex items-center justify-between mb-4">
-
             <div className="flex items-center">
-              <h2 className="text-lg font-bold dark:text-white">
-                Code
-              </h2>
-
-              {/* Title input field */}
+              <h2 className="text-lg font-bold dark:text-white">Code</h2>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="ml-4 px-3 py-2 rounded-2xl border border-black dark:bg-transparent dark:border-white dark:text-white"
-                placeholder="Title" />
+                placeholder="Title"
+              />
             </div>
-
             <div className="flex items-center">
               <select
                 value={language}
                 onChange={handleLanguageChange}
-                className="px-3 py-2 rounded-xl border border-black dark:border-white mr-2 dark:bg-transparent dark:text-white" >
-
-                <option
-                  value="c"
-                  className="border rounded-3xl dark:bg-slate-900 dark:text-white">  C
+                className="px-3 py-2 rounded-xl border border-black dark:border-white mr-2 dark:bg-transparent dark:text-white"
+              >
+                <option value="c" className="border rounded-3xl dark:bg-slate-900 dark:text-white">
+                  C
                 </option>
-
-                <option
-                  value="cpp"
-                  className="rounded-3xl dark:bg-slate-900 dark:text-white">C++
+                <option value="cpp" className="border rounded-3xl dark:bg-slate-900 dark:text-white">
+                  C++
                 </option>
-
-                <option
-                  value="python"
-                  className="rounded-3xl dark:bg-slate-900 dark:text-white">Python
+                <option value="python" className="border rounded-3xl dark:bg-slate-900 dark:text-white">
+                  Python
                 </option>
-
-                <option
-                  value="java"
-                  className="rounded-3xl dark:bg-slate-900 dark:text-white">Java
+                <option value="javascript" className="border rounded-3xl dark:bg-slate-900 dark:text-white">
+                  JavaScript
                 </option>
-
-                <option
-                  value="javascript"
-                  className="rounded-3xl dark:bg-slate-900 dark:text-white">JavaScript
-                </option>
-
               </select>
-
               <button
                 onClick={handleRunCode}
-                className=" mr-4 px-4 py-2 rounded-2xl border border-black   text-black dark:border-white hover:bg-red-300 dark:text-white dark:bg-transparent dark:hover:bg-red-800" >
+                className="mr-4 px-4 py-2 rounded-2xl border border-black text-black dark:border-white hover:bg-red-300 dark:text-white dark:bg-transparent dark:hover:bg-red-800"
+              >
                 Run Code
               </button>
-
               <button
                 onClick={handleSave}
-                className="bg-green-400 border border-black text-white px-2 py-2 rounded-2xl hover:bg-green-600">
+                className="bg-green-400 border border-black text-white px-2 py-2 rounded-2xl hover:bg-green-600"
+              >
                 Save Snippet
               </button>
             </div>
-
           </div>
           <div className="flex-grow">
             <Editor
               height="80%"
               theme="vs-dark"
-              value={code}
+              value={languageCode[language]} // Set editor value based on language
               onChange={handleEditorChange}
               language={language}
               options={{
                 automaticLayout: true,
-                minimap: { enabled: false }, // Optional: Disable minimap for a cleaner UI
-                wordWrap: "on", // Optional: Wrap words to fit within the editor width
+                minimap: { enabled: false },
+                wordWrap: "on",
               }}
             />
           </div>
-
         </div>
 
         {/* Input and Output Section */}
@@ -178,14 +156,13 @@ const EditorPage = () => {
               value={output}
               className="w-full h-3/6 px-4 py-2 rounded-2xl border border-black dark:border-gray-300 bg-gray-100 dark:bg-transparent dark:text-white"
               placeholder="Output..."
+              readOnly
             />
           </div>
         </div>
       </div>
-
     </div>
   );
 };
 
 export default EditorPage;
-

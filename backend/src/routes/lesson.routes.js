@@ -1,9 +1,7 @@
 import express from "express";
 import { addLesson, getLessons, getLessonsByLang, getSpecificLesson } from "../controllers/lessons.controller.js";
-import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
-// Routes
 
 router.get('/get', getLessons);
 
