@@ -29,7 +29,8 @@ const EditorPage = () => {
   const handleRunCode = async () => {
     try {
       setOutput("Running..."); // Display "Running..." in the output window
-      const response = await fetch("http://localhost:5001/api/run", {
+      // const response = await fetch("http://localhost:5001/api/run", {
+      const response = await fetch("/api/run", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
