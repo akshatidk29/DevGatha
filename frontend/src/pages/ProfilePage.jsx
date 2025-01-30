@@ -32,7 +32,6 @@ const ProfilePage = () => {
                 setError("Failed to load progress. Please try again.");
             }
         };
-        navigate(0); // Soft reload
         fetchProgress();
     }, []);
 
