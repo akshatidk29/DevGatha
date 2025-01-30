@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../store/useAuthStore';
 import { Link } from 'react-router-dom';
 import { axiosInstance } from '../lib/axios';
@@ -7,10 +8,13 @@ import boyAvatar from "../img/boy.png"
 import girlAvatar from "../img/girl.png"
 
 const ProfilePage = () => {
+    const navigate = useNavigate();
     const { authUser } = useAuthStore();
     const [progress, setProgress] = useState(null);
     const [error, setError] = useState(null);
-    const formattedDate = format(parseISO(authUser.createdAt), 'dd MMMM yyyy');
+    const formattedDate = authUser?.createdAt
+  ? format(parseISO(authUser.createdAt), 'dd MMMM yyyy')
+  : 'N/A';
     const [avatar, setAvatar] = useState(boyAvatar); // State for the avatar image
 
     const handleChangeAvatar = () => {
@@ -28,6 +32,7 @@ const ProfilePage = () => {
                 setError("Failed to load progress. Please try again.");
             }
         };
+        navigate(0); // Soft reload
         fetchProgress();
     }, []);
 
