@@ -2,7 +2,7 @@ import { body, validationResult } from 'express-validator';
 import User from "../models/user.model.js";
 
 // Add achievement controller
-export const addAchievement = [
+export const addAchievement = [ 
     // Validation middleware for input fields
     body('title').notEmpty().withMessage('Title is required'),
     body('description').notEmpty().withMessage('Description is required'),

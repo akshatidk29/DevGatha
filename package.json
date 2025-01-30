@@ -1,0 +1,21 @@
+{
+  "name": "devgatha",
+  "version": "1.0.0",
+  "description": "DevGatha is an AI-powered code learning platform designed to make programming education accessible and interactive. With personalized lessons, dynamic progress tracking, and an integrated code editor, DevGatha is your one-stop destination to become a coding expert.",
+  "main": "index.js",
+  "scripts": {
+    "build":"npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start":"npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akshatidk29/DevGatha.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akshatidk29/DevGatha/issues"
+  },
+  "homepage": "https://github.com/akshatidk29/DevGatha#readme"
+}

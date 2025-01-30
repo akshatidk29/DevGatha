@@ -13,6 +13,7 @@
     "@monaco-editor/react": "^4.6.0",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
+    "devgatha": "file:..",
     "lucide-react": "^0.469.0",
     "monaco-editor": "^0.52.2",
     "monaco-languageclient": "^9.0.0",

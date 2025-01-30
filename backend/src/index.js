@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
 import bodyParser from "body-parser";
 
 import authRoutes from "./routes/auth.routes.js"
@@ -20,6 +21,7 @@ import { connectDB } from "./lib/db.js";
 dotenv.config();
 
 const PORT = process.env.PORT;
+const __dirname = path.resolve();
 
 const app = express();
 app.use(express.json());
@@ -40,6 +42,13 @@ app.use("/api/progress", progressRoute);
 app.use("/api/user", userProfileRoute);
 app.use("/api/chatbot", chatbotRoutes);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  })
+}
 
 app.listen(PORT, () => {
   console.log("Server Running");
